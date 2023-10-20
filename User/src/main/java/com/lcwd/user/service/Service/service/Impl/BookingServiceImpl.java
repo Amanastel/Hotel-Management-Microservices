@@ -93,7 +93,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public String cancelBooking(String bookingId) {
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow( () -> new RuntimeException("Booking not found with id: " + bookingId + ""));
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow( () -> new BookingException("Booking not found with id: " + bookingId + ""));
         log.info("Booking: {}",booking);
 
 
@@ -102,6 +102,8 @@ public class BookingServiceImpl implements BookingService {
         if(cancelBooking.equals("CANCELLED")){
             booking.setBookingStatus(BookingStatus.CANCELLED);
             log.info("Booking cancelled");
+        }else {
+            throw new BookingException("Booking not cancelled "+cancelBooking+" Please try again");
         }
         bookingRepository.save(booking);
         return "Booking cancelled";
@@ -119,6 +121,6 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking getBookingById(String bookingId) {
-        return bookingRepository.findById(bookingId).orElseThrow( () -> new RuntimeException("Booking not found with id: " + bookingId + ""));
+        return bookingRepository.findById(bookingId).orElseThrow( () -> new BookingException("Booking not found with id: " + bookingId + ""));
     }
 }

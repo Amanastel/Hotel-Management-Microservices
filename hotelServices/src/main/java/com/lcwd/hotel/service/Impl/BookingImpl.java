@@ -65,6 +65,9 @@ public class BookingImpl implements BookingService {
 
         Room room = roomRepository.findById(booking.getRoomId()).orElseThrow( () -> new RuntimeException("Room not found with id: " + booking.getRoomId() + ""));
 
+        if (room.getStatus().equals(Status.AVAILABLE)) {
+            return "ROOM ALREADY AVAILABLE";
+        }
         room.setStatus(Status.AVAILABLE);
         roomRepository.save(room);
         return "CANCELLED";
