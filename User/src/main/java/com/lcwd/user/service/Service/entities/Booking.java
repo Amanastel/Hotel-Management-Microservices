@@ -1,5 +1,6 @@
 package com.lcwd.user.service.Service.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -24,6 +25,9 @@ public class Booking {
     private LocalDate checkOutDate;
     private Integer amount;
     private PaymentStatus paymentStatus;
+
+    private BookingStatus bookingStatus;
     @ManyToOne
+    @JsonIgnore
     private User user;
 }

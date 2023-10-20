@@ -7,8 +7,7 @@ import com.lcwd.user.service.Service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -22,8 +21,19 @@ public class BookingController {
     private BookingService bookingService;
 
 
-    @RequestMapping("/addBooking/{hotelId}/{roomId}/{userId}")
-    public ResponseEntity<Booking> addBookingHandler(String hotelId, String roomId, String userId){
-        return ResponseEntity.ok(bookingService.bookRoom(userId,hotelId,roomId));
+    @PostMapping("/addBooking/{hotelId}/{userId}")
+    public ResponseEntity<Booking> addBookingHandler(@PathVariable String hotelId, @PathVariable String userId){
+        return ResponseEntity.ok(bookingService.bookRoom(userId,hotelId));
     }
+
+    @GetMapping("/getBooking/{bookingId}")
+    public ResponseEntity<Booking> getBookingByIdHandler(@PathVariable String bookingId){
+        return ResponseEntity.ok(bookingService.getBookingById(bookingId));
+    }
+
+    @DeleteMapping("/cancelBooking/{bookingId}")
+    public ResponseEntity<String> cancelBookingHandler(@PathVariable String bookingId){
+        return ResponseEntity.ok(bookingService.cancelBooking(bookingId));
+    }
+
 }

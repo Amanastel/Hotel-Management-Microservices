@@ -27,46 +27,42 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorDetails> customerExceptionHandler(NotFoundException ce, WebRequest req){
 
-
         ErrorDetails err= new ErrorDetails();
         err.setTimeStamp(LocalDateTime.now());
         err.setMessage(ce.getMessage());
         err.setUri(req.getDescription(false));
-
         return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
 
     }
 
     @ExceptionHandler(UserException.class)
-    public ResponseEntity<ErrorDetails> userExceptionHandler(NotFoundException ce, WebRequest req){
-        ErrorDetails err= new ErrorDetails();
+    public ResponseEntity<ErrorDetails> userExceptionHandler(UserException de, WebRequest web) {
+        ErrorDetails err = new ErrorDetails();
+        err.setMessage(de.getMessage());
         err.setTimeStamp(LocalDateTime.now());
-        err.setMessage(ce.getMessage());
-        err.setUri(req.getDescription(false));
-
-        return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
-
+        err.setUri(web.getDescription(false));
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BookingException.class)
-    public ResponseEntity<ErrorDetails> bookingExceptionHandler(NotFoundException ce, WebRequest req){
+    public ResponseEntity<ErrorDetails> bookingExceptionHandler(BookingException ce, WebRequest req){
         ErrorDetails err= new ErrorDetails();
         err.setTimeStamp(LocalDateTime.now());
         err.setMessage(ce.getMessage());
         err.setUri(req.getDescription(false));
 
-        return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
 
     }
 
     @ExceptionHandler(HotelException.class)
-    public ResponseEntity<ErrorDetails> hotelExceptionHandler(NotFoundException ce, WebRequest req){
+    public ResponseEntity<ErrorDetails> hotelExceptionHandler(HotelException ce, WebRequest req){
         ErrorDetails err= new ErrorDetails();
         err.setTimeStamp(LocalDateTime.now());
         err.setMessage(ce.getMessage());
         err.setUri(req.getDescription(false));
 
-        return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
 
     }
 

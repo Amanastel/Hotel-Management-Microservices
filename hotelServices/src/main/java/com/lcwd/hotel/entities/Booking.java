@@ -1,8 +1,10 @@
 package com.lcwd.hotel.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,12 @@ public class Booking {
     private LocalDate checkOutDate;
     private Integer amount;
     private PaymentStatus paymentStatus;
+
     @ManyToOne
+    @JsonIgnore
     private Hotel hotel;
+    @Transient
+    @JsonIgnore
+    private User user;
 
 }
