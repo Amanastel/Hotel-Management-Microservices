@@ -1,16 +1,18 @@
 package com.lcwd.user.service.Service.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "micro_users")
 public class User {
-
     @Id
     @Column(name = "ID")
     private String userId;
@@ -20,9 +22,8 @@ public class User {
     private String email;
     @Column(name = "ABOUT")
     private String about;
-
     @Transient
     private List<Rating> ratings = new ArrayList<>();
-
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Booking> bookings = new ArrayList<>();
 }

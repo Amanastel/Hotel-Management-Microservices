@@ -36,9 +36,39 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
 
     }
-    
-    
 
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<ErrorDetails> userExceptionHandler(NotFoundException ce, WebRequest req){
+        ErrorDetails err= new ErrorDetails();
+        err.setTimeStamp(LocalDateTime.now());
+        err.setMessage(ce.getMessage());
+        err.setUri(req.getDescription(false));
+
+        return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(BookingException.class)
+    public ResponseEntity<ErrorDetails> bookingExceptionHandler(NotFoundException ce, WebRequest req){
+        ErrorDetails err= new ErrorDetails();
+        err.setTimeStamp(LocalDateTime.now());
+        err.setMessage(ce.getMessage());
+        err.setUri(req.getDescription(false));
+
+        return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(HotelException.class)
+    public ResponseEntity<ErrorDetails> hotelExceptionHandler(NotFoundException ce, WebRequest req){
+        ErrorDetails err= new ErrorDetails();
+        err.setTimeStamp(LocalDateTime.now());
+        err.setMessage(ce.getMessage());
+        err.setUri(req.getDescription(false));
+
+        return new ResponseEntity<ErrorDetails>(err, HttpStatus.BAD_REQUEST);
+
+    }
 
 
 

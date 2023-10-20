@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
@@ -46,9 +47,7 @@ public class AuthController {
 
         authResponse.setExpireAt(client.getAccessToken().getExpiresAt().getEpochSecond());
 
-        List<String> authorities = user.getAuthorities().stream().map(grantedAuthority -> {
-            return grantedAuthority.getAuthority();
-        }).collect(Collectors.toList());
+        List<String> authorities = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
 
         authResponse.setAuthorities(authorities);
