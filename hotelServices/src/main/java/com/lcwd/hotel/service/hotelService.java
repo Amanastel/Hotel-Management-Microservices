@@ -14,5 +14,7 @@ public interface hotelService {
     public Room getRoomById(String roomId);
     public List<Room> getAllAvailableRoom(String hotelId);
     public List<Room> getAllBookedRoom(String hotelId);
+    public List<Room> getAllRooms(String hotelId);
+    public Room deleteRoomById(String roomId);
 
 }

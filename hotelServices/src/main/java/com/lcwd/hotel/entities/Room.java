@@ -1,8 +1,7 @@
 package com.lcwd.hotel.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +14,15 @@ import lombok.Setter;
 @Entity
 public class Room {
     @Id
-    private String romeId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer roomId;
     private String roomType;
     private String roomNumber;
     private Integer roomPrice;
     private Status Status;
     private String roomDescription;
     @ManyToOne
+    @JsonIgnore
     private Hotel hotel;
 
 }

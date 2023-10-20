@@ -44,7 +44,7 @@ public class BookingServiceImpl implements BookingService {
 
         Room room = rooms.stream().filter(r -> r.getRoomId().equals(roomId)).findFirst().orElseThrow(() -> new HotelException("Room not found"));
 
-        if(room.getStatus().equals("BOOKED")){
+        if(room.getStatus().equals(Status.BOOKED)){
             throw new BookingException("Room already booked");
         }
 

@@ -6,7 +6,7 @@ spring:
   application:
     name: hotels-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/microservice
+    url: jdbc:postgresql://localhost:5432/micro
     username: postgres
     password: aman1234
 

@@ -46,7 +46,7 @@ public class hotelController {
         return ResponseEntity.ok(hotelService.getRoomById(roomId));
     }
 
-    @GetMapping("/{hotelId}/rooms/available")
+    @GetMapping("/{hotelId}/available")
     public ResponseEntity<List<Room>> getAllAvailableRoom(@PathVariable String hotelId) {
         return ResponseEntity.ok(hotelService.getAllAvailableRoom(hotelId));
     }
@@ -56,6 +56,16 @@ public class hotelController {
         return ResponseEntity.ok(hotelService.getAllBookedRoom(hotelId));
     }
 
+    @GetMapping("/{hotelId}/getAllRooms")
+    public ResponseEntity<List<Room>> getAllRooms(@PathVariable String hotelId) {
+        return ResponseEntity.ok(hotelService.getAllRooms(hotelId));
+    }
+
+
+    @DeleteMapping("/{hotelId}/rooms/{roomId}")
+    public ResponseEntity<Room> deleteRoomById(@PathVariable String roomId) {
+        return ResponseEntity.ok(hotelService.deleteRoomById(roomId));
+    }
 
 
 }
