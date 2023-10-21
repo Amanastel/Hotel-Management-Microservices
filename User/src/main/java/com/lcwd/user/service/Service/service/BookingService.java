@@ -10,11 +10,16 @@ public interface BookingService {
 
     public String cancelBooking(String bookingId);
 
-    public String cancelAllBookings(String userId);
-
     public List<Booking> getAllBookings(String userId);
 
     public Booking getBookingById(String bookingId);
+    public List<Booking> getAllBookingsByHotelId(String hotelId);
+
+    public List<Hotel> getHotelByLocation(String location);
+
+    public List<Hotel> getHotelByName(String name);
+
+    public List<Hotel> availableHotels(String hotelId);
 
 
 }

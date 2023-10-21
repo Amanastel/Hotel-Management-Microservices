@@ -113,6 +113,24 @@ public class hotelServiceImpl implements hotelService {
         roomRepository.deleteById(roomId);
         return room;
     }
+
+    @Override
+    public List<Hotel> getHotelByLocation(String location) {
+        List<Hotel> hotels = hotelRepository.findByLocation(location);
+        if (hotels.isEmpty()) {
+            throw new NotFoundException("Hotel not available with location: " + location + "");
+        }
+        return hotels;
+    }
+
+    @Override
+    public Hotel getHotelByName(String name) {
+        Hotel hotel = hotelRepository.findByName(name);
+        if (hotel == null) {
+            throw new NotFoundException("Hotel not available with name: " + name + "");
+        }
+        return hotel;
+    }
 }
 
 
