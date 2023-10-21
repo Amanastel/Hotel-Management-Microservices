@@ -12,9 +12,11 @@ import com.lcwd.user.service.Service.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -108,19 +110,56 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.save(booking);
         return "Booking cancelled";
     }
-
-    @Override
-    public String cancelAllBookings(String userId) {
-        return null;
-    }
-
     @Override
     public List<Booking> getAllBookings(String userId) {
-        return null;
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException("User not found"));
+        return bookingRepository.findByUser(user);
+
     }
 
     @Override
     public Booking getBookingById(String bookingId) {
         return bookingRepository.findById(bookingId).orElseThrow( () -> new BookingException("Booking not found with id: " + bookingId + ""));
     }
+
+    @Override
+    public List<Booking> getAllBookingsByHotelId(String hotelId) {
+        return bookingRepository.findByHotelId(hotelId);
+    }
+
+    @Override
+    public List<Hotel> getHotelByLocation(String location) {
+        List<Hotel> hotels = restTemplate.getForObject("http://HOTELS-SERVICE/hotels/location/"+location,List.class);
+        if (hotels == null) {
+            throw new HotelException("Hotel not found");
+        }
+        return hotels;
+    }
+
+    @Override
+    public List<Hotel> getHotelByName(String name) {
+        List<Hotel> hotels = restTemplate.getForObject("http://HOTELS-SERVICE/hotels/name/"+name,List.class);
+
+        log.info("Hotels: {}",hotels);
+
+        if (hotels == null) {
+            throw new HotelException("Hotel not found");
+        }
+        return hotels;
+    }
+
+    @Override
+    public List<Hotel> availableHotels(String hotelId) {
+//        @GetMapping("/{hotelId}/available")
+        List<Hotel> hotels = restTemplate.getForObject("http://HOTELS-SERVICE/hotels/"+hotelId+"/available",List.class);
+
+        log.info("Hotels: {}",hotels);
+
+        if (hotels == null) {
+            throw new HotelException("Hotel not found");
+        }
+        return hotels;
+    }
+
+
 }
