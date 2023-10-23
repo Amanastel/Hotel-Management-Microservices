@@ -27,4 +27,7 @@ public class User {
     private List<Rating> ratings = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();
+
+    @OneToOne(mappedBy="user" ,cascade=CascadeType.ALL)
+    private Wallet wallet;
 }

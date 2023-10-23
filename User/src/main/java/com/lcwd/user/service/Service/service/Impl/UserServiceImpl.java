@@ -3,6 +3,7 @@ package com.lcwd.user.service.Service.service.Impl;
 import com.lcwd.user.service.Service.entities.Hotel;
 import com.lcwd.user.service.Service.entities.Rating;
 import com.lcwd.user.service.Service.entities.User;
+import com.lcwd.user.service.Service.entities.Wallet;
 import com.lcwd.user.service.Service.exception.NotFoundException;
 import com.lcwd.user.service.Service.external.service.HotelService;
 import com.lcwd.user.service.Service.repository.UserRepository;
@@ -41,6 +42,10 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) {
         String randomUserId = UUID.randomUUID().toString();
         user.setUserId(randomUserId);
+        Wallet wallet = new Wallet();
+        wallet.setBalance(0.0f);
+        wallet.setUser(user);
+        user.setWallet(wallet);
         userRepository.save(user);
         return user;
     }
@@ -101,5 +106,10 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(String userId) {
         User user = userRepository.findById(userId).orElseThrow( () -> new NotFoundException("User not found with id: " + userId));
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
