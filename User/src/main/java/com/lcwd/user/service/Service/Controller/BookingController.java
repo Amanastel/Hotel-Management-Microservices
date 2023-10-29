@@ -32,7 +32,15 @@ public class BookingController {
     @GetMapping("/getBooking/{bookingId}")
     public ResponseEntity<Booking> getBookingByIdHandler(@PathVariable String bookingId){
         return ResponseEntity.ok(bookingService.getBookingById(bookingId));
+
     }
+
+
+    @PostMapping("/completeBooking/{bookingId}")
+    public ResponseEntity<Booking> completeBookingHandler(@PathVariable String bookingId){
+        return ResponseEntity.ok(bookingService.completeBooking(bookingId));
+    }
+
 
     @DeleteMapping("/cancelBooking/{bookingId}")
     public ResponseEntity<String> cancelBookingHandler(@PathVariable String bookingId){

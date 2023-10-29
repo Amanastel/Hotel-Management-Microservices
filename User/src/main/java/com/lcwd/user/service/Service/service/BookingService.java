@@ -21,5 +21,6 @@ public interface BookingService {
 
     public List<Hotel> availableHotels(String hotelId);
 
+    public Booking completeBooking(String bookingId);
 
 }

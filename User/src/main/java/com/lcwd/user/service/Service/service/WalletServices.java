@@ -46,4 +46,15 @@ public interface WalletServices {
      * @return The wallet details associated with the user.
      */
     public Wallet getLoggedUserWallet(String email);
+
+    /**
+     * Retrieves the balance of a wallet associated with a logged-in user by their email.
+     *
+     * @param email The email of the logged-in user.
+     * @return The balance of the wallet associated with the user.
+     */
+
+    public Float getBalance(String email);
+
+    public Wallet payRideBill(Integer walletId, Float bill);
 }

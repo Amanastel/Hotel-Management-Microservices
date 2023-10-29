@@ -81,6 +81,7 @@ public class WalletServicesImpl implements WalletServices {
      * @param bill     The bill amount to be paid.
      * @return The updated wallet details.
      */
+
     @Override
     public Wallet payRideBill(Integer walletId, Float bill) {
         if(walletId==null || bill == null)
@@ -169,5 +170,19 @@ public class WalletServicesImpl implements WalletServices {
             throw new WalletException("NO Wallet found ");
         return res;
 
+    }
+
+    @Override
+    public Float getBalance(String email) {
+        if(email==null)
+            throw new UserException("Invalid user details provided");
+
+        User user= urepo.findByEmail(email);
+        if(user==null)
+            throw new UserException("No User Found");
+        Wallet res= user.getWallet();
+        if(res==null)
+            throw new WalletException("NO Wallet found ");
+        return res.getBalance();
     }
 }
