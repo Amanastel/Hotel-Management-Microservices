@@ -1,6 +1,7 @@
 package com.lcwd.hotel.service.Impl;
 
 import com.lcwd.hotel.entities.*;
+import com.lcwd.hotel.exception.NotFoundException;
 import com.lcwd.hotel.repository.BookingRepository;
 import com.lcwd.hotel.repository.HotelRepository;
 import com.lcwd.hotel.repository.RoomRepository;
@@ -25,9 +26,9 @@ public class BookingImpl implements BookingService {
     @Override
     public String bookRoom(String hotelId, String userId, Booking book) {
 
-        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow( () -> new RuntimeException("Hotel not found with id: " + hotelId + ""));
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow( () -> new NotFoundException("Hotel not found with id: " + hotelId + ""));
 
-        Room room = roomRepository.findById(book.getRoomId()).orElseThrow( () -> new RuntimeException("Room not found with id: " + book.getRoomId() + ""));
+        Room room = roomRepository.findById(book.getRoomId()).orElseThrow( () -> new NotFoundException("Room not found with id: " + book.getRoomId() + ""));
 
         if(room.getStatus().equals(Status.BOOKED)) {
             return "ROOM ALREADY BOOKED";
@@ -51,7 +52,7 @@ public class BookingImpl implements BookingService {
 
     @Override
     public Booking getBookingById(String bookingId) {
-        return bookingRepository.findById(bookingId).orElseThrow( () -> new RuntimeException("Booking not found with id: " + bookingId + ""));
+        return bookingRepository.findById(bookingId).orElseThrow( () -> new NotFoundException("Booking not found with id: " + bookingId + ""));
     }
 
     @Override
@@ -61,9 +62,9 @@ public class BookingImpl implements BookingService {
 
     @Override
     public String cancelBooking(String bookingId) {
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow( () -> new RuntimeException("Booking not found with id: " + bookingId + ""));
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow( () -> new NotFoundException("Booking not found with id: " + bookingId + ""));
 
-        Room room = roomRepository.findById(booking.getRoomId()).orElseThrow( () -> new RuntimeException("Room not found with id: " + booking.getRoomId() + ""));
+        Room room = roomRepository.findById(booking.getRoomId()).orElseThrow( () -> new NotFoundException("Room not found with id: " + booking.getRoomId() + ""));
 
         if (room.getStatus().equals(Status.AVAILABLE)) {
             return "ROOM ALREADY AVAILABLE";
@@ -75,9 +76,9 @@ public class BookingImpl implements BookingService {
 
     @Override
     public String completeBooking(String bookingId) {
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow( () -> new RuntimeException("Booking not found with id: " + bookingId + ""));
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow( () -> new NotFoundException("Booking not found with id: " + bookingId + ""));
 
-        Room room = roomRepository.findById(booking.getRoomId()).orElseThrow( () -> new RuntimeException("Room not found with id: " + booking.getRoomId() + ""));
+        Room room = roomRepository.findById(booking.getRoomId()).orElseThrow( () -> new NotFoundException("Room not found with id: " + booking.getRoomId() + ""));
 
         room.setStatus(Status.AVAILABLE);
         roomRepository.save(room);

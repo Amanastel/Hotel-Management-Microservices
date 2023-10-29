@@ -8,6 +8,7 @@ import com.lcwd.user.service.Service.exception.UserException;
 import com.lcwd.user.service.Service.external.service.HotelService;
 import com.lcwd.user.service.Service.repository.BookingRepository;
 import com.lcwd.user.service.Service.repository.UserRepository;
+import com.lcwd.user.service.Service.repository.WalletRepository;
 import com.lcwd.user.service.Service.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,6 +37,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private WalletRepository walletRepository;
 
     @Override
     public Booking bookRoom(String userId, String hotelId) {
@@ -159,6 +164,64 @@ public class BookingServiceImpl implements BookingService {
             throw new HotelException("Hotel not found");
         }
         return hotels;
+    }
+
+    @Override
+    public Booking completeBooking(String bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow( () -> new BookingException("Booking not found with id: " + bookingId + ""));
+
+        if (booking.getPaymentStatus().equals(PaymentStatus.PAID)) {
+            throw new BookingException("Booking already paid");
+        }
+
+        if (booking.getBookingStatus().equals(BookingStatus.CANCELLED)) {
+            throw new BookingException("Booking already cancelled");
+        }
+        User user = booking.getUser();
+        log.info("Booking: {}",booking);
+        booking.setPaymentStatus(PaymentStatus.PAID);
+        booking.setBookingStatus(BookingStatus.COMPLETED);
+        Integer amount = booking.getAmount();
+        Wallet wallet = user.getWallet();
+        if (wallet == null) {
+            throw new NotFoundException("Wallet not found");
+        }
+
+        if (wallet.getBalance() < amount) {
+            throw new NotFoundException("Insufficient balance");
+        }
+
+
+        Hotel hotel = hotelService.getHotel(booking.getHotelId());
+        if (hotel == null) {
+            throw new NotFoundException("Hotel not found");
+        }
+
+        String isBookingCompleted = restTemplate.getForObject("http://HOTELS-SERVICE/hotels/completeBooking/"+bookingId,String.class);
+        log.info("Boolean 99 cancelBooking {} ", isBookingCompleted);
+        if(isBookingCompleted.equals("COMPLETED")){
+            log.info("Booking completed");
+        }else {
+            throw new BookingException("Booking not completed "+isBookingCompleted+" Please try again");
+        }
+
+
+        Float balance = wallet.getBalance();
+        balance = balance - amount;
+        wallet.setBalance(balance);
+        booking.setAmount(amount);
+        Transactions transactions = new Transactions();
+        transactions.setTransactionDate(LocalDateTime.now());
+        transactions.setAmount(Float.valueOf(amount));
+        transactions.setType(TransactionType.DEBIT);
+        transactions.setCurrentBalance(balance);
+        wallet.getTransactions().add(transactions);
+
+        walletRepository.save(wallet);
+        bookingRepository.save(booking);
+        return booking;
+
+
     }
 
 
