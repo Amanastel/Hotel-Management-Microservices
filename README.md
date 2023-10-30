@@ -16,6 +16,12 @@ Welcome to the Hotel Management Microservices project. This application is desig
 ## Features
 This application provides the following features:
 
+- **User Service**:
+  - User registration and authentication.
+  - User can book hotel rooms.
+  - User can cancel bookings.
+  - Wallet system to track all transactions for users.
+
 - **Hotel Service**:
   - Add hotels with details.
   - Add rooms to hotels.
