@@ -1,91 +1,85 @@
-# Hotel-Management-Microservices Project
+# Hotel Management Microservices
 
+Welcome to the Hotel Management Microservices project. This application is designed to manage various aspects of a hotel, including booking rooms, adding hotels, and handling user ratings.
 
-This project is a collection of Spring Boot-based microservices that provide various services for a hotel management system. The project includes the following microservices:
+## Table of Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
 
-- [User Service](#user-service)
-- [Service Registry](#service-registry)
-- [Hotel Service](#hotel-service)
-- [Rating Service](#rating-service)
-- [Config Service](#config-service)
-- [API Gateway](#api-gateway)
+## Features
+This application provides the following features:
 
-## User Service
+- **Hotel Service**:
+  - Add hotels with details.
+  - Add rooms to hotels.
+  - Get hotel details by ID or name.
+  - Get a list of all available rooms in a hotel.
+  - Get a list of all booked rooms in a hotel.
 
-The User Service is responsible for managing user-related functionalities. It uses Spring Boot and includes the following key dependencies:
+- **Booking Service**:
+  - Book rooms in hotels.
+  - Get booking details by booking ID.
+  - Get a list of all bookings.
 
-- Spring Boot Actuator
-- Spring Boot AOP
-- Resilience4j for resilience and fault tolerance
-- Spring Cloud Eureka Client for service registration
-- Spring Cloud Config for configuration management
-- Spring Cloud OpenFeign for REST API integration
-- Spring Data JPA for data access
-- Spring Web for web services
-- Springdoc for API documentation
-- MySQL Connector for database access
-- Lombok for reduced boilerplate code
+- **Rating Service**:
+  - Add ratings and reviews for hotels.
+  - Get all ratings.
+  - Get ratings by user ID or hotel ID.
 
-## Service Registry
+- **Service Registry**:
+  - Register and discover microservices.
+  
+- **Configuration Server**:
+  - Manage centralized configurations for microservices.
+  
+- **API Gateway**:
+  - Gateway for accessing microservices.
 
-The Service Registry is a Eureka server for service registration and discovery. It uses Spring Boot and includes the following key dependency:
-
-- Spring Cloud Eureka Server
-
-## Hotel Service
-
-The Hotel Service is responsible for managing hotel-related data. It uses Spring Boot and includes the following key dependencies:
-
-- Spring Boot Actuator
-- Spring Cloud Eureka Client for service registration
-- Spring Boot Data JPA for data access
-- Spring Boot Web for web services
-- Spring Boot Validation for input validation
-- Springdoc for API documentation
-- PostgreSQL Connector for database access
-- Lombok for reduced boilerplate code
-
-## Rating Service
-
-The Rating Service handles the rating of hotels. It uses Spring Boot and includes the following key dependencies:
-
-- Spring Boot Actuator
-- Spring Cloud Eureka Client for service registration
-- Spring Boot Data JPA for data access
-- Spring Boot Web for web services
-- Spring Boot Validation for input validation
-- Springdoc for API documentation
-- MySQL Connector for database access
-- Lombok for reduced boilerplate code
-
-## Config Service
-
-The Config Service is responsible for providing centralized configuration management. It uses Spring Boot and includes the following key dependency:
-
-- Spring Cloud Config Server
-- Spring Cloud Eureka Client for service registration
-
-## API Gateway
-
-The API Gateway acts as a gateway for routing and securing requests to the microservices. It uses Spring Boot and includes the following key dependencies:
-
-- Spring Boot WebFlux for reactive web services
-- Spring Cloud Gateway for routing and load balancing
-- Spring Cloud Eureka Client for service registration
-- Spring Security for security
-- Okta Spring Boot Starter for Okta integration
+## Tech Stack
+- Java
+- Spring Boot
+- Spring Cloud
+- Spring Cloud Eureka
+- Spring Cloud Config
+- Spring Security
+- OAuth 2.0
+- Spring Data JPA
+- Spring Web
+- Spring Data MongoDB
+- Spring Data REST
+- Spring Cloud Gateway
+- Netflix Eureka
+- Thymeleaf
+- MySQL
+- MongoDB
+- Okta
+- Git
 
 ## Getting Started
+To get started with the project, make sure you have the required tools and dependencies installed.
 
-To run the microservices, follow these steps:
+### Installation
+1. Clone this repository: `git clone https://github.com/Amanastel/Hotel-Management-Microservices.git`
+2. Navigate to the project directory: `cd Hotel-Management-Microservices`
 
-1. Clone the repository.
-2. Build each microservice using Maven or your preferred build tool.
-3. Start the Service Registry, Config Service, and API Gateway.
-4. Start the User Service, Hotel Service, and Rating Service.
-5. Access the services through the API Gateway.
-6. Explore the API documentation provided by Springdoc.
+### Configuration
+- Configure the properties of each microservice according to your requirements.
+
+### Usage
+- Run each microservice individually to start the Hotel Management system.
+
+### API Endpoints
+- Explore the API endpoints of each microservice by referring to their respective source code.
+
+## Contributing
+Contributions are welcome. Please create an issue or pull request if you'd like to contribute to this project.
 
 ## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the [MIT License](LICENSE).
