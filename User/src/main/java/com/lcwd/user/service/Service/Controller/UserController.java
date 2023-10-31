@@ -24,7 +24,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+/*
+   {    "name": "user 1",
+        "email": "user1@mail",
+         "about": "this is user 1"
+     }
 
+ */
 
     @PostMapping
     public ResponseEntity<User> addUserHandler(@RequestBody User user){
